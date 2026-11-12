@@ -1,5 +1,8 @@
 # dsh-boss-zhipin · BOSS直聘求职助手
 
+[![test](https://github.com/Herbert-wang820/dsh-boss-zhipin/actions/workflows/test.yml/badge.svg)](https://github.com/Herbert-wang820/dsh-boss-zhipin/actions/workflows/test.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 一个 [DeepSeek Harness](https://github.com/) Host 插件：用**浏览器扫码登录** BOSS直聘，检索职位 → 按简历匹配打分 → 对合适的岗位发送**结合简历与 JD 的自我介绍**。
 
 适合"想批量但不想盲投"的场景：先把不相关、薪资明显不匹配、常驻海外的岗位筛掉，剩下的再逐条确认文案。
