@@ -137,7 +137,7 @@ await test('姓名抽取不会把段落标题或句子片段当成名字', () =>
 await test('年限识别：10 余年 / 10年以上 / 表头 10年', () => {
   assert.equal(estimateYears('10 余年 IT 运维经验'), 10);
   assert.equal(estimateYears('10年以上工作经验'), 10);
-  assert.equal(estimateYears('王硕\n本科 · 10年经验 · 33岁\n个人优势\n做过运维'), 10);
+  assert.equal(estimateYears('李明\n本科 · 10年经验 · 33岁\n个人优势\n做过运维'), 10);
   assert.equal(estimateYears('本科 · 10年 · 33岁'), 10);
   assert.equal(estimateYears('没有任何年限信息'), 0);
 });
