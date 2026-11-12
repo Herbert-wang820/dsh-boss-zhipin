@@ -1,0 +1,13 @@
+# dsh-boss-zhipin 的 bundle patch。
+#
+# 行里不写 config：默认值都在 lib/config.js，profile 覆盖时只写要改的键，例如：
+#
+#   - id: boss-zhipin
+#     config:
+#       city: 101010100
+#       dailyGreetLimit: 20
+#
+# 注意：按 id 覆盖会替换整个 config 对象，所以覆盖时把需要的键一次写全。
+- insert:
+    - id: boss-zhipin
+      name: dsh-boss-zhipin

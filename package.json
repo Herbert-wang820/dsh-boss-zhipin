@@ -1,0 +1,57 @@
+{
+  "name": "dsh-boss-zhipin",
+  "version": "0.1.0",
+  "description": "BOSS直聘求职助手：浏览器扫码登录、职位检索、简历匹配打分与自动打招呼（DSH Host 插件）",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "lib",
+    "locale",
+    "docs",
+    "icon.svg",
+    "cordis.patch.yml",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "boss",
+    "zhipin",
+    "job-search",
+    "resume",
+    "job-matching",
+    "browser-automation",
+    "cdp"
+  ],
+  "license": "MIT",
+  "author": "Wang Shuo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Herbert-wang820/dsh-boss-zhipin.git"
+  },
+  "homepage": "https://github.com/Herbert-wang820/dsh-boss-zhipin#readme",
+  "bugs": {
+    "url": "https://github.com/Herbert-wang820/dsh-boss-zhipin/issues"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "test": "node tests/run.mjs",
+    "test:load": "node tests/load.mjs",
+    "test:all": "node tests/run.mjs && node tests/load.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

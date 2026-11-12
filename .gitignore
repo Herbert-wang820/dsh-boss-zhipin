@@ -1,0 +1,23 @@
+# 依赖
+node_modules/
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# 插件运行时数据（简历、历史、浏览器登录态、截图）——绝不入库
+boss-zhipin/
+data/
+screenshots/
+*.log
+
+# 本地临时脚本
+.work/
+tmp/
+scratch/
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
