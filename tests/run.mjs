@@ -209,6 +209,17 @@ await test('文案校验：占位符、链接、超长', () => {
   assert.equal(checkMessage('您好' + '很长的内容'.repeat(60)).ok, false);
 });
 
+await test('文案校验：不能以对方姓名/称呼开头', () => {
+  assert.equal(checkMessage('刘先生您好，我是张三，做运维十年。').ok, false);
+  assert.equal(checkMessage('王昊您好，我是张三，做运维十年。').ok, false);
+  assert.equal(checkMessage('刘女士，您好，我是张三。').ok, false);
+  assert.equal(checkMessage('老师您好，我是张三。').ok, false);
+  // 正常开头不能被误伤
+  assert.equal(checkMessage('您好，我是张三，做运维十年。').ok, true);
+  assert.equal(checkMessage('您好！我是张三，做运维十年。').ok, true);
+  assert.equal(checkMessage('您好，看到贵司在招 AI 应用工程师，我是张三。').ok, true);
+});
+
 await test('职位归一化：jobId 能拼出详情链接', () => {
   const job = normalizeJob({
     encryptJobId: 'enc-1',

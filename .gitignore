@@ -14,6 +14,8 @@ screenshots/
 .work/
 tmp/
 scratch/
+# 实跑脚本里有真实岗位与打招呼文案，只留在本地
+tests/send-two.mjs
 
 # 编辑器 / 系统
 .DS_Store
