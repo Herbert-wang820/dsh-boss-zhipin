@@ -2,6 +2,23 @@
 
 本项目遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
+## [Unreleased] — 2026-11-13
+
+### 修复
+
+- **标签页越开越多（根因）**：`/json/list` 返回的字段是 `id`，代码只读 `targetId`，
+  拿到的一直是 `undefined`。于是 `attachPage` 认为「没有可用标签页」，每次调用都新建一个；
+  `waitForChatPage` 也永远匹配不到已开的聊天页。现在 `listTargets` 统一补 `targetId`。
+- 打招呼不再每个岗位新建 1~3 个标签页：整批共用同一个工作标签页，
+  每次先回 `about:blank` 再进详情（绕过站点把复用页弹回首页的行为），收尾统一关闭。
+- 新增 `reapTabs()`：开跑前/收尾时清掉残留的 `/job_detail/` 页和重复的 BOSS 首页，
+  只留一个主标签页；跑过几十个岗位后窗口里不再堆十几个首页。
+- `Page.close()` 顺带关掉自己那条 CDP 连接，避免长期运行时悬挂 WebSocket。
+
+### 新增
+
+- `tests/tab-reuse.mjs`：真机验证「一个标签页连跑 3 个详情 + 残留清理」，可当作回归脚本。
+
 ## [0.1.0] — 2026-11-12
 
 首个可用版本。在真实账号上完成过一轮完整流程：24 个岗位检索与打分、3 个岗位实际发送。
