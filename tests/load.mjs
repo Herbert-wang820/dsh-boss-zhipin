@@ -49,13 +49,13 @@ const dispose = apply(ctx, { dataDir: dir, port: 9555 });
 assert.equal(dispose, undefined, 'apply 不需要返回值，清理逻辑通过 ctx.effect 注册');
 assert.equal(name, 'dsh-boss-zhipin');
 assert.deepEqual(inject, ['tools']);
-assert.equal(registered.size, 12, `应注册 12 个工具，实际 ${registered.size}`);
+assert.equal(registered.size, 14, `应注册 14 个工具，实际 ${registered.size}`);
 
 const names = [...registered.keys()].sort();
 console.log('registered tools:', names.join(', '));
 
 // 系统提示注入
-assert.ok(logs.some(([, message]) => message.includes('已注册 12 个工具')), logs.map(([, m]) => m).join('\n'));
+assert.ok(logs.some(([, message]) => message.includes('已注册 14 个工具')), logs.map(([, m]) => m).join('\n'));
 
 // 无浏览器时 boss_status 不能抛：它要把错误装进结果里
 const status = await registered.get('boss_status').execute({});

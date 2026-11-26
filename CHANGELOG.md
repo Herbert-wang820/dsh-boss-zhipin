@@ -2,6 +2,28 @@
 
 本项目遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
+## [0.2.0] — 2026-11-26
+
+### 新增
+
+- **补发定制招呼**：`boss_rescue_scan` + `boss_rescue_send`，专门处理「用户自己点了『立即沟通』、
+  站点只替我发了一句『您好，可以和您聊聊吗？』、没有真正自我介绍」的会话。
+  - `boss_rescue_scan`（只读）：读左侧会话列表 → 逐个打开 → 读出「我发的 / 对方发的 / 系统」三类消息，
+    挑出「只有自动招呼」的会话，按简历起草文案并给出匹配分。**默认只看本周**（`since='week'`），
+    范围按会话最后消息时间算，超出的会话不会打开；`since` 也支持 `today` / `month` / `all` / `days:N`。
+  - `boss_rescue_send`（默认 dry run）：直接进已有聊天页发消息，**不再点「立即沟通」**，
+    因此绕开了首次沟通不跳聊天页的老问题；默认跳过已有定制文案的会话（`force:true` 才重发），
+    并遵守每日配额与 `minIntervalMs`。
+- `lib/rescue.js`：会话列表/打开/读消息/自动招呼判定。会话的 `jobId`、`bossId`、`securityId`
+  从列表项的 Vue 实例 `$props.source` 里读（页面上根本没有这些字段）。
+- `tests/rescue-scan.mjs`、`tests/rescue-tool-test.mjs`：真机只读扫描与工具层 dry run 回归脚本。
+
+### 说明
+
+- 自动招呼判定用正则白名单 + 长度/自我介绍关键词兜底：宁可漏判成「已定制」，也不误判成「只有自动招呼」，
+  避免重复打扰 HR。
+- 扫描要逐个打开会话，站点的未读状态因此会变化；20 个会话约需 2~3 分钟。
+
 ## [Unreleased] — 2026-11-13
 
 ### 修复

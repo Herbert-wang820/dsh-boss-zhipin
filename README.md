@@ -73,7 +73,26 @@ boss_greet {job_id:"...", dry_run:false}   # 确认后真发
 | `boss_draft_intro` | 用模板起草一段介绍（不发送）。 |
 | `boss_greet` | 单个岗位打招呼；默认 dry run，发送前校验匹配门槛、配额、间隔、去重。 |
 | `boss_greet_batch` | 批量发送，按 `minIntervalMs` 限速，遇风控/未登录自动中止。 |
+| `boss_rescue_scan` | 扫最近会话，挑出「只有站点自动招呼、没有我的介绍」的会话，按简历起草文案 + 匹配分。只读。 |
+| `boss_rescue_send` | 给这些会话补发定制文案（直接进已有聊天，不点「立即沟通」）；默认 dry run，跳过已发过定制文案的会话。 |
 | `boss_history` | 打招呼历史（含完整文案与失败原因），用于去重与复盘。 |
+
+### 补发定制招呼（`boss_rescue_*`）
+
+适合「自己在 BOSS 上点过『立即沟通』，但站点只替我发了一句『您好，可以和您聊聊吗？』」的岗位：
+
+1. `boss_rescue_scan`（`since` 默认 `week`，`limit` 默认 40）→ 返回 `items`，每项含 `job_id` / `boss_id` / `security_id` /
+   起草好的 `message` / 匹配分 / HR 最后几句话。
+2. 挑要发的，把 `items` 传给 `boss_rescue_send`（默认 `dry_run`，只预览）。
+3. 确认后 `dry_run:false` 真发；已有定制文案的会话默认跳过，`force:true` 才重发。
+
+`since` 支持 `today` / `week`（本周一 0 点起，默认）/ `month` / `all` / `days:N`，
+按会话最后一条消息的时间过滤——范围外的会话根本不会打开，扫得也快。返回值里 `outOfRange`
+是「因超出时间范围而跳过」的条数，方便确认没漏。
+
+> 它绕过了「点立即沟通」那条链路（会话已经存在），所以不会被「首次沟通不跳聊天页」卡住，
+> 也不需要 `securityId` 才能发——`securityId` 只用来拉 JD 起草文案。
+> 扫描会逐个打开会话，未读状态因此会变化；20 个会话约 2~3 分钟。
 
 ## 匹配门槛（那个"可调指标"）
 
@@ -159,7 +178,7 @@ boss_greet {job_id:"...", dry_run:false}   # 确认后真发
 
 ```bash
 node tests/run.mjs          # 单元测试（配置/存储/简历/打分/文案/工具定义），不联网
-node tests/load.mjs         # 用假 ctx 模拟宿主，验证 apply() 注册 12 个工具
+node tests/load.mjs         # 用假 ctx 模拟宿主，验证 apply() 注册 14 个工具
 node tests/live.mjs 9333 运维 101280100   # 联调：需浏览器已登录，跑真实检索/详情/匹配/起草
 ```
 
@@ -174,7 +193,7 @@ lib/zhipin.js    站点操作：检索、详情、沟通、发消息
 lib/resume.js    简历解析、技能与年限抽取
 lib/match.js     匹配打分与风险提示
 lib/intro.js     文案草稿与发送前校验
-lib/tools.js     12 个工具的定义与实现
+lib/tools.js     14 个工具的定义与实现
 lib/index.js     插件入口
 docs/ARCHITECTURE.md   架构与关键实现决策
 docs/RETROSPECTIVE.md  开发复盘：踩过的坑与实测结论

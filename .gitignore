@@ -23,3 +23,10 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
+
+# 一次性探测脚本（含真实会话/岗位数据，只留本地）
+tests/probe-*.mjs
+tests/rescue-send-skip.mjs
+tests/inspect-chat.mjs
+tests/check-chat.mjs
+tests/dismiss-modals.mjs

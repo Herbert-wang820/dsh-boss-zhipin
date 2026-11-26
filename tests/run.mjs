@@ -312,11 +312,11 @@ await test('详情解析：补齐 jobId 与 securityId，保证能拼出可点�
   assert.equal(job.hrName, '苏女士');
 });
 
-await test('工具定义：12 个、名称唯一、schema 合法', () => {
+await test('工具定义：14 个、名称唯一、schema 合法', () => {
   const dir = path.join(os.tmpdir(), `boss-tools-${Date.now()}`);
   const store = new Store(dir);
   const tools = buildTools({ dataDir: dir, port: 9555 }, store);
-  assert.equal(tools.length, 12);
+  assert.equal(tools.length, 14);
   const names = tools.map((tool) => tool.name);
   assert.equal(new Set(names).size, names.length);
   for (const tool of tools) {

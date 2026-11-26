@@ -1,6 +1,6 @@
 {
   "name": "dsh-boss-zhipin",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "BOSS直聘求职助手：浏览器扫码登录、职位检索、简历匹配打分与自动打招呼（DSH Host 插件）",
   "type": "module",
   "main": "lib/index.js",
